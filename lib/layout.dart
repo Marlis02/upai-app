@@ -1,8 +1,5 @@
-import 'package:ctmax_upai/pages/main_page.dart';
-import 'package:ctmax_upai/pages/orders_page.dart';
-import 'package:ctmax_upai/pages/profile_page.dart';
-import 'package:ctmax_upai/pages/qr_code_page.dart';
-import 'package:ctmax_upai/pages/search_page.dart';
+import 'package:ctmax_upai/screens/index.dart';
+import 'package:ctmax_upai/styles/colors_style.dart';
 import 'package:flutter/material.dart';
 
 enum NavigationItem { orders, qr, profile, search, main }
@@ -11,14 +8,12 @@ class ItemInfoHolder {
   final Icon? icon;
   final Icon? activeIcon;
   final String? label;
-
   const ItemInfoHolder({this.icon, this.label, this.activeIcon});
 }
 
 class MainLayout extends StatefulWidget {
   static const routeName = '';
   const MainLayout({super.key});
-
   @override
   _MainLayoutState createState() => _MainLayoutState();
 }
@@ -65,11 +60,11 @@ class _MainLayoutState extends State<MainLayout> {
 
   Widget _compileTabWidget(NavigationItem item) {
     return switch (item) {
-      NavigationItem.orders => const OrdersPage(),
-      NavigationItem.qr => const QrCodePage(),
-      NavigationItem.search => const SearchPage(),
-      NavigationItem.profile => const ProfilePage(),
-      _ => const MainPage(),
+      NavigationItem.orders => const OrdersScreen(),
+      NavigationItem.qr => const QrCodeScreen(),
+      NavigationItem.search => const SearchScreen(),
+      NavigationItem.profile => const ProfileScreen(),
+      _ => const MainScreen(),
     };
   }
 
@@ -79,6 +74,7 @@ class _MainLayoutState extends State<MainLayout> {
     return Scaffold(
       body: _compileTabWidget(selectedTabItem),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         unselectedFontSize: 11,
         selectedFontSize: 12,
         enableFeedback: true,
@@ -94,7 +90,7 @@ class _MainLayoutState extends State<MainLayout> {
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.grey,
         iconSize: 25,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: AppColors.primary,
         onTap: _onItemTapped,
       ),
     );

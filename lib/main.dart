@@ -1,6 +1,6 @@
-import 'package:ctmax_upai/components/bottomNavigation/bottom_navigation.dart';
 import 'package:ctmax_upai/layout.dart';
-import 'package:ctmax_upai/pages/login_page.dart';
+import 'package:ctmax_upai/screens/login_screen/login_screen.dart';
+import 'package:ctmax_upai/styles/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -20,9 +20,10 @@ class UpaiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPage(),
+      theme: defaultTheme,
+      home: LoginScreen(),
       routes: {
-        LoginPage.routeName: (context) => LoginPage(),
+        LoginScreen.routeName: (context) => LoginScreen(),
         MainLayout.routeName: (context) => const MainLayout(),
       },
     );

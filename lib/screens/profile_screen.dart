@@ -13,12 +13,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Center(
         child: Column(children: [
-      Text('ProfileScreen'),
+      const Text('ProfileScreen'),
       TextButton(
           onPressed: () {
             Navigator.pushReplacementNamed(context, LoginScreen.routeName);
           },
-          child: Text('Logout'))
+          child: const Text('Logout'))
     ]));
   }
 }

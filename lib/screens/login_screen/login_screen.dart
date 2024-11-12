@@ -3,6 +3,7 @@ import 'package:ctmax_upai/layout.dart';
 import 'package:ctmax_upai/logic/bloc/auth/auth_bloc.dart';
 import 'package:ctmax_upai/logic/bloc/auth/auth_enent.dart';
 import 'package:ctmax_upai/logic/bloc/auth/auth_state.dart';
+import 'package:ctmax_upai/screens/login_screen/login_widgets.dart';
 import 'package:ctmax_upai/styles/colors_style.dart';
 import 'package:ctmax_upai/ui/widgets/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
+
+  const LoginScreen({super.key});
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -20,56 +23,55 @@ class _LoginScreenState extends State<LoginScreen> {
   final authBloc = AuthBloc(
     AuthServices(),
   );
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  bool _isObscured = true;
-
-  void _togglePasswordVisibility() {
-    setState(() {
-      _isObscured = !_isObscured;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) =>
-          AuthBloc(AuthServices()), // используем созданный экземпляр блока
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Center(
-              child: SingleChildScrollView(
-                child: Container(
-                  height: screenSize.height,
-                  padding: const EdgeInsets.all(30),
-                  constraints: const BoxConstraints(maxWidth: 400),
-                  child: BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                        _header(),
-                          const SizedBox(height: 20),
-                          _formField(context),
-                          const SizedBox(height: 20),
-                          _buildDivider(),
-                          const SizedBox(height: 20),
-                          _buildSocialButton(
-                              'assets/icons/google.svg', 'Google'),
-                          _buildSocialButton(
-                              'assets/icons/facebook.svg', 'Facebook'),
-                          _buildSocialButton(
-                              'assets/icons/telegram.svg', 'Telegram'),
-                        ],
-                      );
-                    },
+      create: (context) => authBloc,
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            Navigator.pushReplacementNamed(context, MainLayout.routeName);
+          } else if (state is AuthError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
+        },
+        child: Scaffold(
+          body: BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  Center(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: screenSize.height,
+                        padding: const EdgeInsets.all(30),
+                        constraints: const BoxConstraints(maxWidth: 400),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Spacer(),
+                            _header(),
+                            const SizedBox(height: 20),
+                            FormFieldWidget(authBloc: authBloc),
+                            const SizedBox(height: 20),
+                            _buildDivider(),
+                            const SizedBox(height: 20),
+                            const Spacer(),
+                            _footer(),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ],
+                  if (state is AuthLoading) const LoadingWidget(),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -100,95 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           "Акции и специальные предложения только для вас!",
-        ),
-      ],
-    );
-  }
-
-  Widget _formField(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            prefixIcon: Icon(
-              Icons.person_rounded,
-              color: Colors.blueGrey[400],
-            ),
-            hintText: 'e-mail, login или номер телефона',
-            hintStyle: const TextStyle(
-              fontSize: 15,
-              color: Colors.grey,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        TextFormField(
-          obscureText: _isObscured,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            prefixIcon: Icon(
-              Icons.lock,
-              color: Colors.blueGrey[400],
-            ),
-            hintText: 'Пароль',
-            hintStyle: const TextStyle(
-              fontSize: 15,
-              color: Colors.grey,
-              fontWeight: FontWeight.w400,
-            ),
-            suffixIcon: IconButton(
-              iconSize: 20,
-              icon: Icon(
-                _isObscured ? Icons.visibility_off : Icons.visibility,
-                color: Colors.blueGrey[400],
-              ),
-              onPressed: _togglePasswordVisibility,
-            ),
-          ),
-        ),
-        const SizedBox(height: 5),
-        Container(
-            height: 30,
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.zero,
-            child: TextButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                padding: const WidgetStatePropertyAll(
-                    EdgeInsets.symmetric(vertical: 0, horizontal: 5)),
-                alignment: Alignment.center,
-                overlayColor:
-                    WidgetStatePropertyAll(AppColors.primary.withOpacity(0.1)),
-              ),
-              child: const Text(
-                "Забыли пароль?",
-                style: TextStyle(color: AppColors.primary, fontSize: 14),
-              ),
-            )),
-        const SizedBox(height: 5),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            minimumSize: const Size(double.infinity, 50),
-          ),
-          onPressed: () {
-            context
-                .read<AuthBloc>()
-                .add(AuthLoginEvent('qwerty', 'qwerty529156'));
-          },
-          child: const Text(
-            "Войти",
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
         ),
       ],
     );

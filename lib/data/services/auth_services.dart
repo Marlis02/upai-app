@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 
 class AuthServices {
   final api = Api();
-  Future<dynamic> login() async {
+  Future<dynamic> login(String username, String password) async {
     var res = await api.post('/api/upai-auth-v1/login/',
-        payload: {"username": "qwerty", "password": "qwerty529156"});
-    debugPrint('SERVICE RESPONSE: ${res}');
+        payload: {"username": username, "password": password});
+    debugPrint('SERVICE RESPONSE: $res');
     return res.data;
   }
 }

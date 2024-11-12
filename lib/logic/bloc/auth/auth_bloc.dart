@@ -10,7 +10,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLoginEvent>((event, emit) async {
       emit(AuthLoading());
       try {
-        var res = await authServices.login();
+        var res = await authServices.login(event.email, event.password);
         emit(AuthSuccess(res));
       } catch (e) {
         emit(AuthError('Ошибка: ${e.toString()}'));

@@ -10,6 +10,9 @@ class Api {
 
   final _dio = Dio(BaseOptions(
     baseUrl: 'http://192.168.123.108:8000/',
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
+    sendTimeout: const Duration(seconds: 10),
   ));
 
   Future<Response> get(String path) async {
@@ -24,7 +27,7 @@ class Api {
     debugPrint('POST auth: $auth get: $path payload: $payload');
     final response = await _dio.post(path,
         data: payload, options: Options(headers: await _header(auth)));
-    debugPrint('POST Reponse status code: ${response}');
+    debugPrint('POST Reponse status code: $response');
     return response;
   }
 

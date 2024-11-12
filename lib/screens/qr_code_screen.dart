@@ -1,6 +1,5 @@
 import 'package:ctmax_upai/styles/colors_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCodeScreen extends StatefulWidget {

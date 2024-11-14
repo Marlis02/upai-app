@@ -72,7 +72,7 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     var selectedTabItem = navigationWidgetMapping.keys.toList()[_selectedIndex];
     return Scaffold(
-      body: _compileTabWidget(selectedTabItem),
+      body: SafeArea(child: _compileTabWidget(selectedTabItem)),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         unselectedFontSize: 11,

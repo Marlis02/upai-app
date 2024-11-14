@@ -1,3 +1,4 @@
+import 'package:ctmax_upai/styles/colors_style.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -10,7 +11,8 @@ class LoadingWidget extends StatelessWidget {
         Container(
           color: Colors.black.withOpacity(0.5), // Полупрозрачный фон
           child: const Center(
-            child: CircularProgressIndicator(), // Индикатор загрузки
+            child: CircularProgressIndicator(
+                color: AppColors.primary), // Индикатор загрузки
           ),
         ),
       ],

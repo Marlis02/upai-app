@@ -1,9 +1,14 @@
+import 'package:ctmax_upai/service_locator.dart';
 import 'package:ctmax_upai/layout.dart';
 import 'package:ctmax_upai/screens/login_screen/login_screen.dart';
+import 'package:ctmax_upai/screens/register_screen/register_screen.dart';
 import 'package:ctmax_upai/styles/theme.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  setupLocator();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,11 +25,13 @@ class UpaiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: defaultTheme,
-      home: LoginScreen(),
+      home: const LoginScreen(),
       routes: {
-        LoginScreen.routeName: (context) => LoginScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
         MainLayout.routeName: (context) => const MainLayout(),
+        RegisterScreen.routeName: (context) => const RegisterScreen(),
       },
     );
   }

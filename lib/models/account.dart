@@ -4,7 +4,7 @@ import 'common.dart';
 
 class Account {
   int? id;
-  String? login;
+  String? username;
   String? firstName;
   String? lastName;
   String? email;
@@ -23,7 +23,7 @@ class Account {
 
   Account({
     this.id,
-    this.login,
+    this.username,
     this.firstName,
     this.lastName,
     this.email,
@@ -44,7 +44,7 @@ class Account {
   factory Account.fromJson(DataParam json) {
     return Account(
       id: json['id'],
-      login: json['login'],
+      username: json['login'],
       firstName: json['firstName'],
       lastName: json['lastName'],
       email: json['email'],
@@ -68,7 +68,7 @@ class Account {
   DataParam toJson() {
     return ({
       'id': id,
-      'login': login,
+      'login': username,
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
@@ -87,8 +87,19 @@ class Account {
     });
   }
 
+  Map<String, dynamic> toRegistrationJson() {
+    return {
+      'username': username,
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'password': password,
+      'password2': password2,
+    };
+  }
+
   @override
   String toString() {
-    return '$login - $email';
+    return '$username - $email';
   }
 }

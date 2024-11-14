@@ -1,5 +1,6 @@
-import 'package:ctmax_upai/logic/bloc/auth/auth_bloc.dart';
-import 'package:ctmax_upai/logic/bloc/auth/auth_enent.dart';
+import 'package:ctmax_upai/logic/bloc/auth/login/login_bloc.dart';
+import 'package:ctmax_upai/logic/bloc/auth/login/login_event.dart';
+import 'package:ctmax_upai/screens/register_screen/register_screen.dart';
 import 'package:ctmax_upai/styles/colors_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,8 +40,8 @@ class HeaderWidget extends StatelessWidget {
 }
 
 class FormFieldWidget extends StatefulWidget {
-  final AuthBloc authBloc;
-  const FormFieldWidget({super.key, required this.authBloc});
+  final AuthLoginBloc authLoginBloc;
+  const FormFieldWidget({super.key, required this.authLoginBloc});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -110,7 +111,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
         ),
         const SizedBox(height: 5),
         Container(
-            height: 30,
+            height: 25,
             alignment: Alignment.centerRight,
             padding: EdgeInsets.zero,
             child: TextButton(
@@ -124,7 +125,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               ),
               child: const Text(
                 "Забыли пароль?",
-                style: TextStyle(color: AppColors.primary, fontSize: 14),
+                style: TextStyle(color: AppColors.primary, fontSize: 12),
               ),
             )),
         const SizedBox(height: 5),
@@ -137,9 +138,9 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
             minimumSize: const Size(double.infinity, 50),
           ),
           onPressed: () {
-            // Событие логина
-            widget.authBloc.add(AuthLoginEvent(
-                _emailController.text, _passwordController.text));
+            widget.authLoginBloc.add(
+              AuthLoginRequest(_emailController.text, _passwordController.text),
+            );
           },
           child: const Text(
             "Войти",
@@ -197,6 +198,39 @@ class DividerWidget extends StatelessWidget {
           child: Text("Или"),
         ),
         Expanded(child: Divider(thickness: 1, color: Colors.blueGrey[400])),
+      ],
+    );
+  }
+}
+
+class LoginFooterWidget extends StatelessWidget {
+  const LoginFooterWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Еще не зарегистрированы?"),
+        SizedBox(
+          height: 25,
+          child: TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, RegisterScreen.routeName);
+            },
+            style: ButtonStyle(
+              padding: const WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 8)),
+              alignment: Alignment.center,
+              overlayColor:
+                  WidgetStatePropertyAll(AppColors.primary.withOpacity(0.1)),
+            ),
+            child: const Text(
+              "Регистрация",
+              style: TextStyle(color: AppColors.primary, fontSize: 14),
+            ),
+          ),
+        )
       ],
     );
   }

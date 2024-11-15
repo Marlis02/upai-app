@@ -1,5 +1,6 @@
 import 'package:ctmax_upai/data/api/api.dart';
 import 'package:ctmax_upai/models/account.dart';
+import 'package:ctmax_upai/utils/shared_prefs.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthServices {
@@ -7,7 +8,7 @@ class AuthServices {
   Future<dynamic> login(String username, String password) async {
     var res = await api.post('/api/upai-auth-v1/login/',
         payload: {"username": username, "password": password});
-    debugPrint('SERVICE RESPONSE: $res');
+    debugPrint('SERVICE RESPONSE LOGIN: ${res.data} DATAAAAAA');
     return res.data;
   }
 

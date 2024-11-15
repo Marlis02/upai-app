@@ -138,6 +138,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
             minimumSize: const Size(double.infinity, 50),
           ),
           onPressed: () {
+            FocusScope.of(context).unfocus();
             widget.authLoginBloc.add(
               AuthLoginRequest(_emailController.text, _passwordController.text),
             );

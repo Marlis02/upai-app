@@ -27,7 +27,7 @@ class Api {
     debugPrint('POST auth: $auth get: $path payload: $payload');
     final response = await _dio.post(path,
         data: payload, options: Options(headers: await _header(auth)));
-    debugPrint('POST Reponse status code: $response');
+    debugPrint('POST Reponse status code: ${response.statusCode}');
     return response;
   }
 

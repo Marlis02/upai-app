@@ -18,6 +18,8 @@ dependencies:
   bloc: ^8.1.4
   sliding_up_panel: ^2.0.0+1
   get_it: ^8.0.2
+  image_picker: ^0.8.7+3
+
 
 dev_dependencies:
   flutter_test:

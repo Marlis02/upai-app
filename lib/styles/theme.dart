@@ -8,7 +8,18 @@ final defaultTheme = ThemeData(
   primaryColor: AppColors.primary,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
+      backgroundColor:  const WidgetStatePropertyAll(AppColors.white),
       overlayColor: WidgetStatePropertyAll(AppColors.primary.withOpacity(0.1)),
     ),
   ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      overlayColor: WidgetStatePropertyAll(AppColors.primary.withOpacity(0.1)),
+    )
+  ),
+  textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        overlayColor: WidgetStatePropertyAll(AppColors.primary.withOpacity(0.1)),
+      )
+  )
 );

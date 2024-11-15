@@ -1,4 +1,3 @@
-import 'package:ctmax_upai/logic/bloc/auth/login/login_bloc.dart';
 import 'package:ctmax_upai/logic/bloc/auth/register/register_bloc.dart';
 import 'package:ctmax_upai/logic/bloc/auth/register/register_event.dart';
 import 'package:ctmax_upai/models/account.dart';

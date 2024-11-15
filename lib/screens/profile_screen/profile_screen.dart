@@ -13,11 +13,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.all( 10),
         child: Column(
           children: [
             ProfileHeaderWidget(),
             const SizedBox(height: 20),
+            ListTile(
+              leading: Icon(Icons.insights),
+              title: Text("Активность"),
+              onTap: () {},
+            ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text("Настройки"),
